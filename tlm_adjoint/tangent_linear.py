@@ -196,8 +196,8 @@ class TangentLinearMap:
         assert len(M) == len(dM)
         for m, dm in zip(M, dM):
             if not hasattr(m, "_tlm_adjoint__tangent_linears"):
-                self._X[var_id(m)] = m
                 m._tlm_adjoint__tangent_linears = {}
+            self._X[var_id(m)] = m
             # Do not set _tlm_adjoint__tlm_root_id, as dm cannot appear as the
             # solution to an Equation
             m._tlm_adjoint__tangent_linears[self.id] = dm
@@ -217,8 +217,8 @@ class TangentLinearMap:
             raise ValueError("x cannot be a replacement")
 
         if not hasattr(x, "_tlm_adjoint__tangent_linears"):
-            self._X[var_id(x)] = x
             x._tlm_adjoint__tangent_linears = {}
+        self._X[var_id(x)] = x
         if self.id not in x._tlm_adjoint__tangent_linears:
             tau_x = var_new_tangent_linear(
                 x, name=f"{var_name(x):s}{self._name_suffix:s}")
